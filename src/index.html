@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hello Pad</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- for google signin -->
+    <meta name="google-signin-client_id" content="191378499046-plou3rc6culbag540oc19r6bc7j7eo0e.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- frameworks used -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        //  on document ready
+        $(() => {
+            // on shortcut: ctrl+enter
+            $("#textToSpeech").keypress(event1 => {
+                if( event1.which == 10 ) {
+                    speak();
+                }
+            });
+
+            updateButtons();
+        });
+
+        //  speak
+        // todo: try this: http://html5-examples.craic.com/google_chrome_text_to_speech.html
+        function speak() {
+            if( textToSpeech.value.length == 0 ) {
+                return;
+            }
+            let utterance = new SpeechSynthesisUtterance(textToSpeech.value);
+            speechSynthesis.speak(utterance);
+        }
+    </script>
+
+    <script>
+        // Google signin and signout
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            updateButtons();
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(() => {
+                console.log('User signed out.');
+                updateButtons();
+            });
+        }
+
+        function updateButtons() {
+            console.log("in update buttons");
+            auth2 = typeof gapi == "undefined" ? null : gapi.auth2 && gapi.auth2.init();
+            if( auth2 && auth2.isSignedIn.get() ) {
+                $("#signInButton").hide();
+                $("#greet").text( `Hello, ${auth2.currentUser.get().getBasicProfile().getName()}`);
+                $("#signOutButton").show();
+            }else {
+                $("#signInButton").show();
+                $("#greet").text("");
+                $("#signOutButton").hide();
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <span class="btn btn-info" onclick="speak()">Speak</span>
+            </div>
+            <div class="col-md-9" align="right">
+                <span id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></span>
+                <span id="greet"></span>
+                <a id="signOutButton" href="#" class="btn btn-info" onclick="signOut()">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <textarea id="textToSpeech" style="width: 100vw; height: 90vh"></textarea>
+</body>
+</html>
