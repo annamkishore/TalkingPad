@@ -25,7 +25,7 @@ class TalkingDB {
             var dbo = db.db(this.dbName);
             let query = {userId: userObjQuery.userId};
             dbObj = db;
-            return dbo.collection(this.collectionName).findOne(query)
+            return dbo.collection(this.collectionName).findOne(query);
         }).then((data) => {
             dbObj.close();
             return data;

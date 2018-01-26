@@ -35,10 +35,14 @@
             }
             let utterance = new SpeechSynthesisUtterance(textToSpeech.value);
             speechSynthesis.speak(utterance);
+
+            // sending userId, text to backend
+            $.get(`putText?userId=${userEmail}&userText=${textToSpeech.value}`);
         }
     </script>
 
     <script>
+        let userEmail = null;
         // Google signin and signout
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
@@ -47,6 +51,7 @@
             console.log('Image URL: ' + profile.getImageUrl());
             console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
+            userEmail = profile.getEmail();
             updateButtons();
         }
 
@@ -65,10 +70,18 @@
                 $("#signInButton").hide();
                 $("#greet").text( `Hello, ${auth2.currentUser.get().getBasicProfile().getName()}`);
                 $("#signOutButton").show();
+
+                // retrieving text for this userId
+                $.get(`getText?userId=${userEmail}`).then(data=>{
+                    $("#textToSpeech").val(data.userText);
+                });
             }else {
                 $("#signInButton").show();
                 $("#greet").text("");
                 $("#signOutButton").hide();
+
+                // sending userId, text to backend
+                $.get(`putText?userId=${userEmail}&userText=${textToSpeech.value}`);
             }
         }
     </script>
