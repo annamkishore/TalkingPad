@@ -81,7 +81,9 @@
                 $("#signOutButton").hide();
 
                 // sending userId, text to backend
-                $.get(`putText?userId=${userEmail}&userText=${textToSpeech.value}`);
+                $.get(`putText?userId=${userEmail}&userText=${textToSpeech.value}`).then(data=>{
+                    $("#textToSpeech").val("");
+                });
             }
         }
     </script>
