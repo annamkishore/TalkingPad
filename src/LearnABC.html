@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A B C..</title>
+
+    <!-- frameworks used -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            /*background-color: DodgerBlue;*/
+        }
+
+        .flex-container>div {
+            background-color: #c1c1f1;
+            width: 1em;
+            margin: 10px;
+            text-align: center;
+            /*line-height: 1em;*/
+            font-size: 12em;
+        }
+    </style>
+
+    <script>
+        $(()=>{
+            showLetters();
+        });
+
+        function showLetters() {
+            let letters = [];
+            // String.fromCharCode(90)
+            for(count = 65 ; count <= 90 ; count++ ) {
+                $("#pad").append(`
+                    <div id=i${count}
+                         onclick="speak('${String.fromCharCode(count)}')"
+                         class="btn btn-info"
+                         style="font-family: ">
+                        ${String.fromCharCode(count)}
+                    </div>
+                `)
+            }
+        }
+
+        function speak(value) {
+            let text = value;
+            if( text == 0 ) {
+                return;
+            }
+            let utterance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(utterance);
+        }
+
+    </script>
+</head>
+<body>
+    <div class="flex-container" id="pad">
+    </div>
+</body>
+</html>
