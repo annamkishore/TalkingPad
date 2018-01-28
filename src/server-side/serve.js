@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 
-app.use(express.static("src"));
+app.use(express.static("src/web"));
 
 let {TalkingDB} = require("./TalkingDB");
 let db = new TalkingDB();
@@ -29,6 +29,3 @@ app.get("/getText", function (req, res) {
 });
 
 app.listen(9090);
-
-// db.putText();
-// db.getText();

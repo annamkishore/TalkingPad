@@ -2,8 +2,9 @@
   "name": "hello-pad",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
+    "startMongo": "mongod --dbpath src/mongo-data",
+    "startNode": "node src/server-side/serve.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
