@@ -26,6 +26,12 @@
                 switch(event1.which) {
                     case 27: speechSynthesis.cancel(); break;
                 }
+                if(event1.ctrlKey) {
+                    switch(event1.which) {
+                        case 188: speechSynthesis.pause(); break;   // ctrl+ fullstop
+                        case 190: speechSynthesis.resume(); break;  // ctrl+ comma
+                    }
+                }
             }).focus();
 
             updateButtons();
