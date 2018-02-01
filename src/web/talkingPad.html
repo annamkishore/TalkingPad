@@ -22,7 +22,7 @@
                 if( event1.which == 10 ) {
                     speak();
                 }
-            });
+            }).focus();
 
             updateButtons();
         });
@@ -93,11 +93,13 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <span class="btn btn-info" onclick="speak()">Speak</span>
+        <div class="row" style="margin-top: 1em; margin-bottom: 1em">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <button class="btn btn-info btn-lg">
+                    Speak <span class="glyphicon glyphicon-volume-up"></span>
+                </button>
             </div>
-            <div class="col-md-9" align="right">
+            <div class="col-md-8 col-sm-8 col-xs-8" align="right">
                 <span id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></span>
                 <span id="greet"></span>
                 <a id="signOutButton" href="#" class="btn btn-info" onclick="signOut()">
@@ -105,8 +107,14 @@
                 </a>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <textarea id="textToSpeech"
+                          placeholder="Type here... press Speak button/press Ctrl+Enter to hear.."
+                          style="min-width: 100%; display: inline-flex; height: calc(100vh - 6em);"></textarea>
+            </div>
+        </div>
     </div>
 
-    <textarea id="textToSpeech" style="width: 100vw; height: 90vh"></textarea>
 </body>
 </html>
