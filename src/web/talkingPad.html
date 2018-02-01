@@ -19,8 +19,12 @@
         $(() => {
             // on shortcut: ctrl+enter
             $("#textToSpeech").keypress(event1 => {
-                if( event1.which == 10 ) {
-                    speak();
+                switch(event1.which) {
+                    case 10: speak(); break;
+                }
+            }).keydown(event1 => {
+                switch(event1.which) {
+                    case 27: speechSynthesis.cancel(); break;
                 }
             }).focus();
 
@@ -110,7 +114,7 @@
         <div class="row">
             <div class="col-md-12">
                 <textarea id="textToSpeech"
-                          placeholder="Type here... press Speak button/press Ctrl+Enter to hear.."
+                          placeholder="Type here... press Speak button/press Ctrl+Enter to hear.. Esc to cancel hearing"
                           style="min-width: 100%; display: inline-flex; height: calc(100vh - 6em);"></textarea>
             </div>
         </div>
