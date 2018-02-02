@@ -81,18 +81,41 @@
             // todo: try this: http://html5-examples.craic.com/google_chrome_text_to_speech.html
             saveText() {
                 // sending userId, text to backend
-                $.get(`http://${ipAndPort}/putText?userId=${userEmail}&userText=${this.text}`);
+                $.get(`http://${ipAndPort}/putText?userId=${userEmail}&userText=${textToSpeech.value}`);
             }
         }
         let talkingPad = new TalkingPad();
     </script>
 
     <script>
+        let talkSelection = false;
+        function setSelected(flag) {
+            talkSelection = flag;
+            if(talkSelection) {
+                $("#selectionCheck").parent().show();
+                $("#selectionUncheck").parent().hide();
+            }else {
+                $("#selectionCheck").parent().hide();
+                $("#selectionUncheck").parent().show();
+            }
+        }
+
+        function speak() {
+            let start = $("#textToSpeech").prop("selectionStart");
+            let end = $("#textToSpeech").prop("selectionEnd");
+            if( start == end ) {
+                end = textToSpeech.textLength;
+            }
+            talkingPad.speak(textToSpeech.value.substring(start, end));
+        }
+
         //  on document ready
         $(() => {
+            setSelected(false);
+
             $("#textToSpeech").keypress(event1 => {
                 switch(event1.which) {
-                    case 10: talkingPad.speak(textToSpeech.value); break; // on shortcut: ctrl+enter
+                    case 10: speak(); break; // on shortcut: ctrl+enter
                 }
             }).keydown(event1 => {
                 if(event1.ctrlKey) {
@@ -115,7 +138,7 @@
         let userEmail = null;
         // Google signin and signout
         function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
+            let profile = googleUser.getBasicProfile();
             console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
             console.log('Name: ' + profile.getName());
             console.log('Image URL: ' + profile.getImageUrl());
@@ -126,7 +149,7 @@
         }
 
         function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
+            let auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(() => {
                 console.log('User signed out.');
                 updateButtons();
@@ -164,7 +187,7 @@
         <div class="row" style="margin-top: 1em; margin-bottom: 1em">
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <button class="btn btn-info">
-                    <i id="playButton" class="material-icons" onclick="talkingPad.speak(textToSpeech.value)">play_circle_outline</i>
+                    <i id="playButton" class="material-icons" onclick="speak()">play_circle_outline</i>
                 </button>
                 <button class="btn btn-info" style="display: none">
                     <i id="pauseButton" class="material-icons" onclick="talkingPad.pause()">pause_circle_outline</i>
@@ -175,6 +198,13 @@
                 <button class="btn btn-info">
                     <i id="stopButton" class="material-icons" onclick="talkingPad.cancel()">stop</i>
                 </button>
+                <button class="btn btn-info">
+                    <i id="selectionCheck" class="material-icons" onclick="setSelected(false)">check_box</i>
+                </button>
+                <button class="btn btn-info" style="">
+                    <i id="selectionUncheck" class="material-icons" onclick="setSelected(true)">check_box_outline_blank</i>
+                </button>
+                Talk from cursor/selected
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8" align="right">
                 <span id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></span>
