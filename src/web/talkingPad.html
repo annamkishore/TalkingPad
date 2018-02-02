@@ -37,19 +37,23 @@
                     this.isSpeakingTheText = true;
                     $("#playButton").parent().hide();
                     $("#pauseButton").parent().show();
+                    $("#resumeButton").parent().hide();
                 };
                 this.utterThis.onpause = event => {
+                    $("#playButton").parent().hide();
                     $("#pauseButton").parent().hide();
                     $("#resumeButton").parent().show();
                 };
                 this.utterThis.onresume = event => {
-                    $("#resumeButton").parent().hide();
+                    $("#playButton").parent().hide();
                     $("#pauseButton").parent().show();
+                    $("#resumeButton").parent().hide();
                 };
                 this.utterThis.onend = event => {
                     this.isSpeakingTheText = false;
-                    $("#pauseButton").parent().hide();
                     $("#playButton").parent().show();
+                    $("#pauseButton").parent().hide();
+                    $("#resumeButton").parent().hide();
                 };
                 speechSynthesis.speak(this.utterThis);
                 console.log("speak");
