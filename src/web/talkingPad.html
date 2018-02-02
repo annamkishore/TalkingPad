@@ -11,46 +11,90 @@
 
     <!-- frameworks used -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
+        // CONSTANTS
+        let ipAndPort = "52.90.58.11:9090";
+        ipAndPort = "localhost:9090";
+
+        // class TalkingPad
+        class TalkingPad {
+            constructor() {
+                this.text = "";
+                this.isSpeakingTheText = false;
+            }
+
+            speak(text) {
+                if( this.isSpeaking() || text == null || text.trim().length == 0 ) {
+                    return;
+                }
+                this.text = text;
+                this.utterThis = new SpeechSynthesisUtterance(this.text);
+                speechSynthesis.speak(this.utterThis);
+                this.utterThis.onstart = event => {
+                    this.isSpeakingTheText = true;
+                };
+                this.utterThis.onend = event => {
+                    this.isSpeakingTheText = false;
+                };
+
+                console.log("speak");
+
+                this.saveText();
+            }
+
+            pause() {
+                speechSynthesis.pause();
+                console.log("pause");
+            }
+
+            resume() {
+                speechSynthesis.resume();
+            }
+
+            cancel() {
+                speechSynthesis.cancel();
+                console.log("cancel");
+            }
+
+            isSpeaking() {
+                return this.isSpeakingTheText;
+            }
+
+            // todo: try this: http://html5-examples.craic.com/google_chrome_text_to_speech.html
+            saveText() {
+                // sending userId, text to backend
+                $.get(`http://${ipAndPort}/putText?userId=${userEmail}&userText=${this.text}`);
+            }
+        }
+        let talkingPad = new TalkingPad();
+    </script>
+
+    <script>
         //  on document ready
         $(() => {
-            // on shortcut: ctrl+enter
             $("#textToSpeech").keypress(event1 => {
                 switch(event1.which) {
-                    case 10: speak(); break;
+                    case 10: talkingPad.speak(textToSpeech.value); break; // on shortcut: ctrl+enter
                 }
             }).keydown(event1 => {
-                switch(event1.which) {
-                    case 27: speechSynthesis.cancel(); break;
-                }
                 if(event1.ctrlKey) {
                     switch(event1.which) {
-                        case 188: speechSynthesis.pause(); break;   // ctrl+ fullstop
-                        case 190: speechSynthesis.resume(); break;  // ctrl+ comma
+                        case 188: talkingPad.pause(); break;    // ctrl+ fullstop
+                        case 190: talkingPad.resume(); break;   // ctrl+ comma
+                    }
+                }else {
+                    switch(event1.which) {
+                        case 27: talkingPad.cancel(); break;    // Esc
                     }
                 }
             }).focus();
 
             updateButtons();
         });
-
-        //  speak
-        // todo: try this: http://html5-examples.craic.com/google_chrome_text_to_speech.html
-        let ipAndPort = "52.90.58.11:9090";
-        ipAndPort = "localhost:9090";
-        function speak() {
-            if( textToSpeech.value.length == 0 ) {
-                return;
-            }
-            let utterance = new SpeechSynthesisUtterance(textToSpeech.value);
-            speechSynthesis.speak(utterance);
-
-            // sending userId, text to backend
-            $.get(`http://${ipAndPort}/putText?userId=${userEmail}&userText=${textToSpeech.value}`);
-        }
     </script>
 
     <script>
@@ -105,8 +149,11 @@
     <div class="container-fluid">
         <div class="row" style="margin-top: 1em; margin-bottom: 1em">
             <div class="col-md-4 col-sm-4 col-xs-4">
-                <button class="btn btn-info btn-lg" onclick="speak()">
-                    Speak <span class="glyphicon glyphicon-volume-up"></span>
+                <button class="btn btn-info">
+                    <i id="playButton" class="material-icons" onclick="talkingPad.speak(textToSpeech.value)">play_circle_outline</i>
+                </button>
+                <button class="btn btn-info">
+                    <i id="stopButton" class="material-icons" onclick="talkingPad.cancel()">stop</i>
                 </button>
             </div>
             <div class="col-md-8 col-sm-8 col-xs-8" align="right">
