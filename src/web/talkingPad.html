@@ -106,7 +106,13 @@
             if( start == end ) {
                 end = textToSpeech.textLength;
             }
-            talkingPad.speak(textToSpeech.value.substring(start, end));
+            let text = "";
+            if(talkSelection) {
+                text = textToSpeech.value.substring(start, end);
+            }else {
+                text = textToSpeech.value;
+            }
+            talkingPad.speak(text);
         }
 
         //  on document ready
