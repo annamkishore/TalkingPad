@@ -33,16 +33,26 @@
                 }
                 this.text = text;
                 this.utterThis = new SpeechSynthesisUtterance(this.text);
-                speechSynthesis.speak(this.utterThis);
                 this.utterThis.onstart = event => {
                     this.isSpeakingTheText = true;
+                    $("#playButton").parent().hide();
+                    $("#pauseButton").parent().show();
+                };
+                this.utterThis.onpause = event => {
+                    $("#pauseButton").parent().hide();
+                    $("#resumeButton").parent().show();
+                };
+                this.utterThis.onresume = event => {
+                    $("#resumeButton").parent().hide();
+                    $("#pauseButton").parent().show();
                 };
                 this.utterThis.onend = event => {
                     this.isSpeakingTheText = false;
+                    $("#pauseButton").parent().hide();
+                    $("#playButton").parent().show();
                 };
-
+                speechSynthesis.speak(this.utterThis);
                 console.log("speak");
-
                 this.saveText();
             }
 
@@ -151,6 +161,12 @@
             <div class="col-md-4 col-sm-4 col-xs-4">
                 <button class="btn btn-info">
                     <i id="playButton" class="material-icons" onclick="talkingPad.speak(textToSpeech.value)">play_circle_outline</i>
+                </button>
+                <button class="btn btn-info" style="display: none">
+                    <i id="pauseButton" class="material-icons" onclick="talkingPad.pause()">pause_circle_outline</i>
+                </button>
+                <button class="btn btn-info" style="display: none">
+                    <i id="resumeButton" class="material-icons" onclick="talkingPad.resume()">play_circle_outline</i>
                 </button>
                 <button class="btn btn-info">
                     <i id="stopButton" class="material-icons" onclick="talkingPad.cancel()">stop</i>
