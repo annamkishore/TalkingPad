@@ -15,6 +15,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
     <script>
         // CONSTANTS
         let ipAndPort = "52.90.58.11:9090";
@@ -100,6 +104,13 @@
             }
         }
 
+        function initButtons() {
+            $("#playButton").parent().show();
+            $("#pauseButton").parent().hide();
+            $("#resumeButton").parent().hide();
+            $("#stopButton").parent().show();
+        }
+
         function speak() {
             let start = $("#textToSpeech").prop("selectionStart");
             let end = $("#textToSpeech").prop("selectionEnd");
@@ -118,6 +129,7 @@
         //  on document ready
         $(() => {
             setSelected(false);
+            initButtons();
 
             $("#textToSpeech").keypress(event1 => {
                 switch(event1.which) {
@@ -190,29 +202,23 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row" style="margin-top: 1em; margin-bottom: 1em">
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <button class="btn btn-info">
-                    <i id="playButton" class="material-icons" onclick="speak()">play_circle_outline</i>
-                </button>
-                <button class="btn btn-info" style="display: none">
-                    <i id="pauseButton" class="material-icons" onclick="talkingPad.pause()">pause_circle_outline</i>
-                </button>
-                <button class="btn btn-info" style="display: none">
-                    <i id="resumeButton" class="material-icons" onclick="talkingPad.resume()">play_circle_outline</i>
-                </button>
-                <button class="btn btn-info">
-                    <i id="stopButton" class="material-icons" onclick="talkingPad.cancel()">stop</i>
-                </button>
-                <button class="btn btn-info">
-                    <i id="selectionCheck" class="material-icons" onclick="setSelected(false)">check_box</i>
-                </button>
-                <button class="btn btn-info" style="">
-                    <i id="selectionUncheck" class="material-icons" onclick="setSelected(true)">check_box_outline_blank</i>
-                </button>
-                Talk from cursor/selected
+        <div class="row">
+            <!--action buttons-->
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large">
+                    <i class="large material-icons">menu</i>
+                </a>
+                <ul>
+                    <li><a id="selectionCheck" onclick="setSelected(false)" class="btn-floating tan"><i class="material-icons">check_box</i></a></li>
+                    <li><a id="selectionUncheck" onclick="setSelected(true)" class="btn-floating grey"><i class="material-icons">check_box_outline_blank</i></a></li>
+                    <li><a id="stopButton" onclick="talkingPad.cancel()"    class="btn-floating deep-orange"><i class="material-icons">stop</i></a></li>
+                    <li><a id="resumeButton" onclick="talkingPad.resume()"  class="btn-floating orange"><i class="material-icons">play_circle_outline</i></a></li>
+                    <li><a id="pauseButton" onclick="talkingPad.pause()"    class="btn-floating blue darken-1"><i class="material-icons">pause_circle_outline</i></a></li>
+                    <li><a id="playButton" onclick="speak()"                class="btn-floating green"><i class="material-icons">play_circle_outline</i></a></li>
+                </ul>
             </div>
-            <div class="col-md-8 col-sm-8 col-xs-8" align="right">
+            <!--google signin-->
+            <div class="col-md-8 col-sm-8 col-xs-8" style="display: none" align="right">
                 <span id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></span>
                 <span id="greet"></span>
                 <a id="signOutButton" href="#" class="btn btn-info" onclick="signOut()">
@@ -221,10 +227,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <!--textarea-->
+            <div>
                 <textarea id="textToSpeech"
                           placeholder="Type here... press Play button/press Ctrl+Enter to hear.. Esc to cancel hearing"
-                          style="min-width: 100%; display: inline-flex; height: calc(100vh - 6em);"></textarea>
+                          style="min-width: 100%; display: inline-flex; height: calc(100vh - 4em);"></textarea>
             </div>
         </div>
     </div>
