@@ -57,10 +57,11 @@
                     $("#playButton").parent().show();
                     $("#pauseButton").parent().hide();
                     $("#resumeButton").parent().hide();
+                    this.cancel();  // workaround: sometimes(specifically, if paused at the end of text), its not speaking if played, so cancelling..
                 };
                 speechSynthesis.speak(this.utterThis);
                 console.log("speak");
-                this.saveText();
+                // this.saveText();
             }
 
             pause() {
@@ -70,6 +71,7 @@
 
             resume() {
                 speechSynthesis.resume();
+                console.log("resume");
             }
 
             cancel() {
