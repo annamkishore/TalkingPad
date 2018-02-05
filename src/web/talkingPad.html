@@ -200,6 +200,23 @@
         }
     </script>
 
+    <script>
+        // todo: not used for now
+        //USE CASE
+        // $('#q').selectRange(0, 10);
+        // $('#q').selectRange(searchVal.indexOf('{'), (searchVal.indexOf('}')+1));
+        //Source here : http://plugins.jquery.com/project/selectRange
+        // https://gist.github.com/beiyuu/2029907
+        //https://gist.githubusercontent.com/beiyuu/2029907/raw/80bc14bec5f198a342bd1fdd8be608466e6ccf8d/select-text-range.js
+
+        $.fn.selectRange = function(start, end) {
+            var e = document.getElementById($(this).attr('id')); // I don't know why... but $(this) don't want to work today :-/
+            if (!e) return;
+            else if (e.setSelectionRange) { e.focus(); e.setSelectionRange(start, end); } /* WebKit */
+            else if (e.createTextRange) { var range = e.createTextRange(); range.collapse(true); range.moveEnd('character', end); range.moveStart('character', start); range.select(); } /* IE */
+            else if (e.selectionStart) { e.selectionStart = start; e.selectionEnd = end; }
+        };
+    </script>
 </head>
 <body style="font-size: 150%">
 
@@ -210,8 +227,8 @@
                 <i class="large material-icons teal">menu</i>
             </button>
             <ul>
-                <li><button id="selectionCheck" onclick="setSelected(false)" class="btn-floating teal lighten-3"><i class="material-icons">check_box</i></button></li>
-                <li><button id="selectionUncheck" onclick="setSelected(true)" class="btn-floating teal lighten-3"><i class="material-icons">check_box_outline_blank</i></button></li>
+                <li style="font-size: 50%">select text<button id="selectionCheck" onclick="setSelected(false)" class="btn-floating teal lighten-3"><i class="material-icons">check_box</i></button></li>
+                <li style="font-size: 50%">select text<button id="selectionUncheck" onclick="setSelected(true)" class="btn-floating teal lighten-3"><i class="material-icons">check_box_outline_blank</i></button></li>
                 <li><button id="stopButton" onclick="talkingPad.cancel()"    class="btn-floating teal lighten-2"><i class="material-icons">stop</i></button></li>
                 <li><button id="resumeButton" onclick="talkingPad.resume()"  class="btn-floating teal lighten-1"><i class="material-icons">play_circle_outline</i></button></li>
                 <li><button id="pauseButton" onclick="talkingPad.pause()"    class="btn-floating teal lighten-1"><i class="material-icons">pause_circle_outline</i></button></li>
@@ -231,7 +248,7 @@
     <div style="display: flex; height: 100%">
         <!--textarea-->
         <textarea id="textToSpeech"
-                  placeholder="Type here... press Play button/press Ctrl+Enter to hear.. Esc to cancel hearing"
+                  placeholder="Type here and press Play button to hear.        shortcuts....Ctrl+Enter PLAY....Ctrl+< PAUSE....Ctrl+> RESUME....Esc STOP"
                   style="border: 0px; padding: 1em; width: 100vw; height: 100vh"></textarea>
     </div>
 
