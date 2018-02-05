@@ -11,12 +11,11 @@
 
     <!-- frameworks used -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
     <script>
@@ -201,39 +200,37 @@
 
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!--action buttons-->
-            <div class="fixed-action-btn">
-                <a class="btn-floating btn-large">
-                    <i class="large material-icons">menu</i>
-                </a>
-                <ul>
-                    <li><a id="selectionCheck" onclick="setSelected(false)" class="btn-floating tan"><i class="material-icons">check_box</i></a></li>
-                    <li><a id="selectionUncheck" onclick="setSelected(true)" class="btn-floating grey"><i class="material-icons">check_box_outline_blank</i></a></li>
-                    <li><a id="stopButton" onclick="talkingPad.cancel()"    class="btn-floating deep-orange"><i class="material-icons">stop</i></a></li>
-                    <li><a id="resumeButton" onclick="talkingPad.resume()"  class="btn-floating orange"><i class="material-icons">play_circle_outline</i></a></li>
-                    <li><a id="pauseButton" onclick="talkingPad.pause()"    class="btn-floating blue darken-1"><i class="material-icons">pause_circle_outline</i></a></li>
-                    <li><a id="playButton" onclick="speak()"                class="btn-floating green"><i class="material-icons">play_circle_outline</i></a></li>
-                </ul>
-            </div>
-            <!--google signin-->
-            <div class="col-md-8 col-sm-8 col-xs-8" style="display: none" align="right">
-                <span id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></span>
-                <span id="greet"></span>
-                <a id="signOutButton" href="#" class="btn btn-info" onclick="signOut()">
-                    <span class="glyphicon glyphicon-log-out"></span>
-                </a>
-            </div>
+
+    <div>
+        <!--action buttons-->
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large">
+                <i class="large material-icons">menu</i>
+            </a>
+            <ul>
+                <li><button id="selectionCheck" onclick="setSelected(false)" class="btn-floating tan"><i class="material-icons">check_box</i></button></li>
+                <li><button id="selectionUncheck" onclick="setSelected(true)" class="btn-floating grey"><i class="material-icons">check_box_outline_blank</i></button></li>
+                <li><button id="stopButton" onclick="talkingPad.cancel()"    class="btn-floating deep-orange"><i class="material-icons">stop</i></button></li>
+                <li><button id="resumeButton" onclick="talkingPad.resume()"  class="btn-floating orange"><i class="material-icons">play_circle_outline</i></button></li>
+                <li><button id="pauseButton" onclick="talkingPad.pause()"    class="btn-floating blue darken-1"><i class="material-icons">pause_circle_outline</i></button></li>
+                <li><button id="playButton" onclick="speak()"                class="btn-floating green"><i class="material-icons">play_circle_outline</i></button></li>
+            </ul>
         </div>
-        <div class="row">
-            <!--textarea-->
-            <div>
-                <textarea id="textToSpeech"
-                          placeholder="Type here... press Play button/press Ctrl+Enter to hear.. Esc to cancel hearing"
-                          style="min-width: 100%; display: inline-flex; height: calc(100vh - 4em);"></textarea>
-            </div>
+        <!--google signin-->
+        <div class="col-md-8 col-sm-8 col-xs-8" style="display: none" align="right">
+            <span id="signInButton" class="g-signin2" data-onsuccess="onSignIn"></span>
+            <span id="greet"></span>
+            <a id="signOutButton" href="#" class="btn btn-info" onclick="signOut()">
+                <span class="glyphicon glyphicon-log-out"></span>
+            </a>
         </div>
+    </div>
+
+    <div style="display: flex; height: 100%">
+        <!--textarea-->
+        <textarea id="textToSpeech"
+                  placeholder="Type here... press Play button/press Ctrl+Enter to hear.. Esc to cancel hearing"
+                  style="border: 0px; padding: 1em; width: 100vw; height: 100vh"></textarea>
     </div>
 
 </body>
