@@ -201,21 +201,21 @@
     </script>
 
 </head>
-<body>
+<body style="font-size: 150%">
 
     <div>
         <!--action buttons-->
         <div class="fixed-action-btn">
-            <a class="btn-floating btn-large">
-                <i class="large material-icons">menu</i>
-            </a>
+            <button class="btn-floating btn-large">
+                <i class="large material-icons teal">menu</i>
+            </button>
             <ul>
-                <li><button id="selectionCheck" onclick="setSelected(false)" class="btn-floating tan"><i class="material-icons">check_box</i></button></li>
-                <li><button id="selectionUncheck" onclick="setSelected(true)" class="btn-floating grey"><i class="material-icons">check_box_outline_blank</i></button></li>
-                <li><button id="stopButton" onclick="talkingPad.cancel()"    class="btn-floating deep-orange"><i class="material-icons">stop</i></button></li>
-                <li><button id="resumeButton" onclick="talkingPad.resume()"  class="btn-floating orange"><i class="material-icons">play_circle_outline</i></button></li>
-                <li><button id="pauseButton" onclick="talkingPad.pause()"    class="btn-floating blue darken-1"><i class="material-icons">pause_circle_outline</i></button></li>
-                <li><button id="playButton" onclick="speak()"                class="btn-floating green"><i class="material-icons">play_circle_outline</i></button></li>
+                <li><button id="selectionCheck" onclick="setSelected(false)" class="btn-floating teal lighten-3"><i class="material-icons">check_box</i></button></li>
+                <li><button id="selectionUncheck" onclick="setSelected(true)" class="btn-floating teal lighten-3"><i class="material-icons">check_box_outline_blank</i></button></li>
+                <li><button id="stopButton" onclick="talkingPad.cancel()"    class="btn-floating teal lighten-2"><i class="material-icons">stop</i></button></li>
+                <li><button id="resumeButton" onclick="talkingPad.resume()"  class="btn-floating teal lighten-1"><i class="material-icons">play_circle_outline</i></button></li>
+                <li><button id="pauseButton" onclick="talkingPad.pause()"    class="btn-floating teal lighten-1"><i class="material-icons">pause_circle_outline</i></button></li>
+                <li><button id="playButton" onclick="speak()"                class="btn-floating teal lighten-1"><i class="material-icons">play_circle_outline</i></button></li>
             </ul>
         </div>
         <!--google signin-->
