@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kishore Wall</title>
+
+    <style>
+        #shop1 a {
+            margin: 10px;
+            padding: 10px;
+            color: darkcyan;
+            font-size: larger;
+            text-decoration: none;
+            border: 1px #92D0BD solid;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #1ec7e6;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        let appList = [
+            {name: "My First Slate", url: "https://play.google.com/store/apps/details?id=com.kish.myfirstslate", imageURL: "https://lh3.googleusercontent.com/SEbVclhv-0VGglAo5ytoYF1tJiqZzc61j3I2DiKJ_XQsnOGXgIAv8kWSoNHVFEpCnPqc=w300-rw"},
+            {name: "15 Puzzle", url: "https://play.google.com/store/apps/details?id=com.kish.puzzle15", imageURL: "https://lh3.googleusercontent.com/vHmdZZJFHQpaQ5z_gHaOj0hr-vGGECOgSs-OjLcB7xYCL1RiLb2P-WbWt4pniXNvd3g=w300-rw"},
+            {name: "Games Den", url: "https://play.google.com/store/apps/details?id=com.kish.gamesden", imageURL: "https://lh3.googleusercontent.com/om0w9VkkFc-D0X7_LJYI7leU8frW64I9P5Or85ntlOFTjSCy7WQZ931oGHYDPqg8pw=w300-rw"},
+            {name: "Talking Slate", url: "http://talking-slate.kishorewall.info", imageURL: "https://s3.amazonaws.com/kishorewall/talkingSlate.JPG"},
+            {name: "Talking Pad", url: "http://talking-pad.kishorewall.info", imageURL: "https://s3.amazonaws.com/kishorewall/talkingPad.JPG"}
+        ];
+
+        $(document).ready(function() {
+           renderPage();
+        });
+
+        function renderPage() {
+            appList.forEach((app)=>$("#shop1").append(`<a href="${app.url}">
+                        <img width="100px" height="100px" src="${app.imageURL}"/>
+                        <div style="margin-top: 10px">${app.name}</div>
+                        </a>`))
+        }
+    </script>
+</head>
+<body>
+
+<div style="display: flex; flex-flow: wrap" id="shop1">
+</div>
+
+</body>
+</html>
