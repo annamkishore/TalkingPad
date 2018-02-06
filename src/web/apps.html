@@ -5,7 +5,7 @@
     <title>Kishore Wall</title>
 
     <style>
-        #shop1 a {
+        #shop1 a, #shop2 a {
             margin: 10px;
             padding: 10px;
             color: darkcyan;
@@ -13,6 +13,7 @@
             text-decoration: none;
             border: 1px #92D0BD solid;
             text-align: center;
+            border-radius: 5px;
         }
 
         a:hover {
@@ -35,16 +36,35 @@
         });
 
         function renderPage() {
-            appList.forEach((app)=>$("#shop1").append(`<a href="${app.url}">
+            appList.slice(0, 3).forEach((app)=>$("#shop1").append(`<a href="${app.url}">
                         <img width="100px" height="100px" src="${app.imageURL}"/>
                         <div style="margin-top: 10px">${app.name}</div>
-                        </a>`))
+                        </a>`));
+            appList.slice(3, 5).forEach((app)=>$("#shop2").append(`<a href="${app.url}">
+                        <img width="100px" height="100px" src="${app.imageURL}"/>
+                        <div style="margin-top: 10px">${app.name}</div>
+                        </a>`));
         }
     </script>
 </head>
 <body>
 
-<div style="display: flex; flex-flow: wrap" id="shop1">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="200px">
+<div style="display: flex; flex-flow: wrap; margin-left: 100px" id="shop1">
+</div>
+
+<div style="
+    margin-top: 30px;
+    margin-bottom: 20px;
+    background: lightseagreen;
+    border-radius: 5px;
+    width: 160px;
+    padding: 5px;
+    font-size: x-large;
+    margin-left: 15px">
+    <table cellpadding="0"><tr><td><img src="web.ico" width="40px"></td><td>Web</td></tr></table>
+</div>
+<div style="display: flex; flex-flow: wrap; margin-left: 100px" id="shop2">
 </div>
 
 </body>
